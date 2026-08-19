@@ -189,16 +189,7 @@
       padding-left: 0 !important;
       padding-right: 0 !important;
     }
-    #sidebarToggle {
-      width: 30px; height: 30px; margin-bottom: 16px;
-      border-radius: 9999px; background: rgba(255,255,255,.32);
-      color: #fff; display: flex; align-items: center; justify-content: center;
-      border: 1px solid rgba(255,255,255,.55); cursor: pointer;
-      transition: background .2s ease, transform .15s ease;
-    }
-    #sidebarToggle:hover { background: rgba(255,255,255,.5); }
-    #sidebarToggle:active { transform: scale(.9); }
-    #sidebarToggle svg { width: 16px; height: 16px; }
+    #sidebarToggle { cursor: pointer; }
     #sidebarRestore {
       position: fixed; top: 14px; left: 14px; z-index: 40;
       width: 40px; height: 40px; border-radius: 14px;
@@ -238,7 +229,7 @@
       <svg id="musicIconOn" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
       <svg id="musicIconOff" class="hidden" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
     </div>
-    <audio id="bgAudio"></audio>
+    <audio id="bgAudio" loop></audio>
     <!-- 左侧边栏 -->
     <aside id="sidebar" class="w-[74px] flex-shrink-0 bg-xh-sidebar flex flex-col items-center py-4 overflow-hidden no-scrollbar z-20 transition-all duration-300 shadow-[2px_0_12px_rgba(var(--xh-primary-dark-rgb),0.12)]">
       <div class="text-white/80 text-[10px] font-medium mb-5 text-center leading-tight px-1">
@@ -1046,39 +1037,8 @@
               </div>
               <div class="space-y-3 mb-4">
                 <input id="whVideoName" type="text" placeholder="视频名称（如：肩颈弹响快速缓解）" class="w-full bg-xh-bg rounded-2xl px-4 py-3 text-xh-text placeholder-xh-muted/60 border border-xh-border text-[14px]">
-
-                <!-- 视频：链接或上传 -->
-                <div>
-                  <p class="text-xh-text text-[13px] font-medium mb-1.5">视频来源</p>
-                  <input id="whVideoUrl" type="text" placeholder="视频链接（可直接播放的 mp4/webm 等，或 B站/YouTube 等）" class="w-full bg-xh-bg rounded-2xl px-4 py-3 text-xh-text placeholder-xh-muted/60 border border-xh-border text-[14px]">
-                  <div class="flex items-center gap-2 mt-2">
-                    <span class="text-xh-muted text-[13px] flex-1">本地视频（可选，优先于链接）</span>
-                    <button type="button" onclick="document.getElementById('whVideoFile').click()" class="text-xh-primary text-[13px] font-medium px-3 py-1.5 bg-white rounded-xl border border-xh-border active:scale-95 transition">上传视频</button>
-                    <input id="whVideoFile" type="file" accept="video/*" class="hidden" onchange="uploadWhVideo(this)">
-                  </div>
-                  <div id="whVideoFilePreview" class="hidden mt-2 flex items-center gap-3 bg-xh-bg rounded-2xl px-3 py-2 border border-xh-border">
-                    <span class="text-lg">🎬</span>
-                    <p id="whVideoFileName" class="text-sm text-xh-text truncate flex-1"></p>
-                    <button type="button" onclick="clearWhVideo()" class="text-xs text-xh-muted underline flex-shrink-0">移除</button>
-                  </div>
-                </div>
-
-                <!-- 封面：链接或上传 -->
-                <div>
-                  <p class="text-xh-text text-[13px] font-medium mb-1.5 mt-1">封面图片（可选）</p>
-                  <input id="whVideoCover" type="text" placeholder="封面图片 URL（可选）" class="w-full bg-xh-bg rounded-2xl px-4 py-3 text-xh-text placeholder-xh-muted/60 border border-xh-border text-[14px]">
-                  <div class="flex items-center gap-2 mt-2">
-                    <span class="text-xh-muted text-[13px] flex-1">或上传本地图片</span>
-                    <button type="button" onclick="document.getElementById('whVideoCoverFile').click()" class="text-xh-primary text-[13px] font-medium px-3 py-1.5 bg-white rounded-xl border border-xh-border active:scale-95 transition">上传封面</button>
-                    <input id="whVideoCoverFile" type="file" accept="image/*" class="hidden" onchange="uploadWhCover(this)">
-                  </div>
-                  <div id="whVideoCoverPreview" class="hidden mt-2 flex items-center gap-3 bg-xh-bg rounded-2xl px-3 py-2 border border-xh-border">
-                    <img id="whVideoCoverImg" class="w-10 h-10 rounded-lg object-cover border border-xh-border">
-                    <p class="text-sm text-xh-text truncate flex-1">已选择封面</p>
-                    <button type="button" onclick="clearWhCover()" class="text-xs text-xh-muted underline flex-shrink-0">移除</button>
-                  </div>
-                </div>
-
+                <input id="whVideoUrl" type="text" placeholder="视频链接（B站/YouTube/Keep等）" class="w-full bg-xh-bg rounded-2xl px-4 py-3 text-xh-text placeholder-xh-muted/60 border border-xh-border text-[14px]">
+                <input id="whVideoCover" type="text" placeholder="封面图片 URL（可选）" class="w-full bg-xh-bg rounded-2xl px-4 py-3 text-xh-text placeholder-xh-muted/60 border border-xh-border text-[14px]">
                 <div class="grid grid-cols-2 gap-3">
                   <input id="whVideoDuration" type="number" placeholder="时长（分钟）" class="w-full bg-xh-bg rounded-2xl px-4 py-3 text-xh-text placeholder-xh-muted/60 border border-xh-border text-[14px]">
                   <select id="whVideoCategory" class="custom-select w-full bg-xh-bg rounded-2xl px-3 py-3 text-xh-text border border-xh-border text-[14px]">
@@ -1265,24 +1225,19 @@
               <div id="musicPanelFile" class="hidden space-y-3">
                 <label class="block text-xh-text font-medium text-[15px]">从视频/音频提取</label>
                 <label class="upload-zone relative block w-full rounded-2xl p-5 text-center cursor-pointer active:scale-95 transition">
-                  <input type="file" id="musicFileInput" accept="video/*,audio/*" multiple class="hidden" onchange="handleMusicFileUpload(this)">
+                  <input type="file" id="musicFileInput" accept="video/*,audio/*" class="hidden" onchange="handleMusicFileUpload(this)">
                   <div class="flex flex-col items-center gap-2">
                     <span class="text-2xl">🎧</span>
                     <p class="text-xh-text text-[14px] font-medium">点击上传视频或音频文件</p>
-                    <p class="text-xs text-xh-muted">可多选，自动提取声音并保存到音乐库（永久保留）</p>
+                    <p class="text-xs text-xh-muted">自动提取声音并保存为背景音乐</p>
                   </div>
                 </label>
-                <div id="musicTrackList" class="space-y-2"></div>
-                <div id="musicLibraryEmpty" class="hidden text-xs text-xh-muted text-center py-2">还没有提取的音频，点击上方上传</div>
-                <div class="flex items-center gap-3">
-                  <button type="button" onclick="playMusicLibrary()" class="flex-1 py-2.5 rounded-2xl bg-xh-primary text-white font-medium text-[14px] active:scale-95 transition">▶ 循环播放</button>
-                  <button type="button" onclick="playMusicOnce()" class="py-2.5 px-3 rounded-2xl border border-xh-border text-xh-primary font-medium text-[14px] bg-white active:scale-95 transition whitespace-nowrap">顺序播放</button>
-                </div>
-                <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-xh-muted">
-                  <span>循环模式：</span>
-                  <label class="flex items-center gap-1 cursor-pointer select-none"><input type="radio" name="loopMode" value="none" onchange="setLoopMode('none')"> 不循环</label>
-                  <label class="flex items-center gap-1 cursor-pointer select-none"><input type="radio" name="loopMode" value="list" onchange="setLoopMode('list')"> 列表循环</label>
-                  <label class="flex items-center gap-1 cursor-pointer select-none"><input type="radio" name="loopMode" value="one" onchange="setLoopMode('one')"> 单曲循环</label>
+                <div id="musicFileInfo" class="hidden bg-xh-bg rounded-2xl p-3 flex items-center justify-between gap-2">
+                  <div class="min-w-0 flex-1">
+                    <p id="musicFileName" class="text-xh-text text-[14px] font-medium truncate"></p>
+                    <p id="musicFileStatus" class="text-xs text-xh-muted truncate"></p>
+                  </div>
+                  <button onclick="clearMusicFile()" class="text-xh-muted text-xl px-2">×</button>
                 </div>
                 <p id="musicFileHint" class="text-xs text-xh-muted"></p>
               </div>
@@ -1366,22 +1321,6 @@
                   <span class="toggle-label"></span>
                 </label>
               </div>
-              <div class="flex items-center justify-between">
-                <div>
-                  <p class="text-xh-text font-medium text-[15px]">每日打卡提醒</p>
-                  <p class="text-xs text-xh-muted">打开应用或到设定时间时，提醒你完成未打卡项</p>
-                </div>
-                <label class="relative inline-block">
-                  <input type="checkbox" id="settingRemindCheckin" class="toggle-checkbox" onchange="saveSettingBool('remindCheckin', this.checked)">
-                  <span class="toggle-label"></span>
-                </label>
-              </div>
-              <div id="remindCheckinTimeRow" class="hidden ml-1 mt-2 pl-3 border-l-2 border-xh-border/60">
-                <div class="flex items-center justify-between gap-2">
-                  <label class="text-xs text-xh-muted">每天提醒时间</label>
-                  <input type="time" id="settingRemindCheckinTime" value="20:00" onchange="saveSetting('remindCheckinTime', this.value)" class="bg-xh-bg rounded-xl px-3 py-1.5 text-[14px] text-xh-text border border-xh-border">
-                </div>
-              </div>
             </div>
           </div>
 
@@ -1392,9 +1331,7 @@
             </div>
             <div class="space-y-3">
               <button onclick="exportData()" class="w-full py-3 rounded-2xl bg-xh-bg text-xh-text font-medium text-[15px] active:scale-95 transition">导出所有数据</button>
-              <input type="file" id="importDataInput" accept="application/json,.json" class="hidden" onchange="importData(this)">
-              <button onclick="document.getElementById('importDataInput').click()" class="w-full mt-2 py-3 rounded-2xl bg-xh-primary text-white font-medium text-[15px] active:scale-95 transition">导入所有数据</button>
-              <button onclick="clearAllData()" class="w-full mt-2 py-3 rounded-2xl bg-xh-bg text-xh-red font-medium text-[15px] active:scale-95 transition">清除所有数据</button>
+              <button onclick="clearAllData()" class="w-full py-3 rounded-2xl bg-xh-bg text-xh-red font-medium text-[15px] active:scale-95 transition">清除所有数据</button>
             </div>
           </div>
         </div>
@@ -1404,16 +1341,6 @@
         <!-- 经期 -->
       </div>
     </main>
-  </div>
-
-  <div id="checkinReminder" class="hidden fixed top-3 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-sm bg-white rounded-2xl shadow-btn px-4 py-3 flex items-center gap-3 border-2 border-xh-primary/30">
-    <span class="text-2xl flex-shrink-0">⏰</span>
-    <div class="flex-1 min-w-0">
-      <p class="text-xh-text font-bold text-[14px]">打卡提醒</p>
-      <p id="checkinReminderText" class="text-xh-muted text-xs truncate"></p>
-    </div>
-    <button onclick="navTo('desktop'); scrollToCheckin(); hideCheckinReminder();" class="bg-xh-primary text-white text-[13px] font-medium px-3 py-1.5 rounded-full active:scale-95 transition flex-shrink-0">去打卡</button>
-    <button onclick="hideCheckinReminder()" class="text-xh-muted text-lg px-1 flex-shrink-0">×</button>
   </div>
 
   <script>
@@ -1526,23 +1453,20 @@
     const DEFAULT_MUSIC_URL = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
     let settings = {};
     let currentMusicBlobUrl = null;
-    let currentTrackId = null;
-    let currentBlobId = null;
 
     // ============== 音乐文件 IndexedDB ==============
-    const MUSIC_DB = { db: null, name: 'xh_music_db', store: 'files', videoStore: 'videos', coverStore: 'covers' };
+    const MUSIC_DB = { db: null, name: 'xh_music_db', store: 'files', videoStore: 'videos' };
     function openMusicDB() {
       if (MUSIC_DB.db) return Promise.resolve(MUSIC_DB.db);
       return new Promise((resolve, reject) => {
         if (!window.indexedDB) return reject(new Error('浏览器不支持 IndexedDB'));
-        const req = indexedDB.open(MUSIC_DB.name, 3);
+        const req = indexedDB.open(MUSIC_DB.name, 2);
         req.onerror = () => reject(req.error);
         req.onsuccess = () => { MUSIC_DB.db = req.result; resolve(req.result); };
         req.onupgradeneeded = (e) => {
           const db = e.target.result;
           if (!db.objectStoreNames.contains(MUSIC_DB.store)) db.createObjectStore(MUSIC_DB.store);
           if (!db.objectStoreNames.contains(MUSIC_DB.videoStore)) db.createObjectStore(MUSIC_DB.videoStore);
-          if (!db.objectStoreNames.contains(MUSIC_DB.coverStore)) db.createObjectStore(MUSIC_DB.coverStore);
         };
       });
     }
@@ -1597,34 +1521,6 @@
       return new Promise((resolve, reject) => {
         const tx = db.transaction(MUSIC_DB.videoStore, 'readwrite');
         const req = tx.objectStore(MUSIC_DB.videoStore).delete(key);
-        req.onsuccess = () => resolve();
-        req.onerror = () => reject(req.error);
-      });
-    }
-    async function saveCoverImage(key, blob) {
-      const db = await openMusicDB();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction(MUSIC_DB.coverStore, 'readwrite');
-        const req = tx.objectStore(MUSIC_DB.coverStore).put(blob, key);
-        req.onsuccess = () => resolve();
-        req.onerror = () => reject(req.error);
-      });
-    }
-    async function getCoverImage(key) {
-      const db = await openMusicDB();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction(MUSIC_DB.coverStore, 'readonly');
-        const req = tx.objectStore(MUSIC_DB.coverStore).get(key);
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = () => reject(req.error);
-      });
-    }
-    async function deleteCoverImage(key) {
-      if (!key) return;
-      const db = await openMusicDB();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction(MUSIC_DB.coverStore, 'readwrite');
-        const req = tx.objectStore(MUSIC_DB.coverStore).delete(key);
         req.onsuccess = () => resolve();
         req.onerror = () => reject(req.error);
       });
@@ -1698,28 +1594,13 @@
         musicVolume: 50,
         musicFileName: '',
         musicFileKey: '',
-        musicLibrary: [],
-        musicLoopMode: 'list',
         defaultPage: 'desktop',
         remindDiary: false,
         remindMemorial: false,
-        remindCheckin: false,
-        remindCheckinTime: '20:00',
         quoteBg: 'default',
         musicBtnPos: { top: 88, right: 12 }
       };
       Object.keys(defaults).forEach(k => { if (settings[k] === undefined) settings[k] = defaults[k]; });
-      if (settings.musicLoopList !== undefined && settings.musicLoopMode === undefined) {
-        settings.musicLoopMode = 'list'; // 升级旧版：之前“列表循环”默认关闭，现统一默认开启循环
-      }
-      delete settings.musicLoopList;
-      LS.set('xh_settings', settings);
-      if (settings.musicFileKey && (!settings.musicLibrary || !settings.musicLibrary.length)) {
-        settings.musicLibrary = [{ id: settings.musicFileKey, name: settings.musicFileName || '提取的音频' }];
-        delete settings.musicFileKey;
-        delete settings.musicFileName;
-        LS.set('xh_settings', settings);
-      }
       applyTheme(settings.theme, false);
       applyNickname();
       applyAnim();
@@ -1767,9 +1648,6 @@
       if (get('settingDefaultPage')) get('settingDefaultPage').value = settings.defaultPage || 'desktop';
       if (get('settingRemindDiary')) get('settingRemindDiary').checked = !!settings.remindDiary;
       if (get('settingRemindMemorial')) get('settingRemindMemorial').checked = !!settings.remindMemorial;
-      if (get('settingRemindCheckin')) get('settingRemindCheckin').checked = !!settings.remindCheckin;
-      if (get('settingRemindCheckinTime')) get('settingRemindCheckinTime').value = settings.remindCheckinTime || '20:00';
-      if (get('remindCheckinTimeRow')) get('remindCheckinTimeRow').classList.toggle('hidden', !settings.remindCheckin);
       if (get('settingStretchGoal')) get('settingStretchGoal').value = getStretchGoal();
       applyQuoteBg();
       renderQuoteBgUI();
@@ -1851,49 +1729,30 @@
       if (key === 'anim') applyAnim();
       if (key === 'todayOverview') renderTodayOverview();
       if (key === 'remindDiary' || key === 'remindMemorial') checkReminders();
-      if (key === 'remindCheckin') {
-        toggleCheckinTimeRow();
-        if (value) {
-          requestCheckinNotifyPermission();
-          maybeRemindCheckin(false);
-        }
-      }
     }
 
     async function applyMusicControls() {
       const audio = document.getElementById('bgAudio');
       if (audio) {
         let src = settings.musicUrl || DEFAULT_MUSIC_URL;
-        if (settings.musicSource === 'file') {
-          const lib = settings.musicLibrary || [];
-          let id = null;
-          if (currentTrackId && lib.some(t => t.id === currentTrackId)) id = currentTrackId;
-          else if (lib.length) id = lib[0].id;
-          if (id) {
-            if (id === currentBlobId && currentMusicBlobUrl) {
-              src = currentMusicBlobUrl;
-            } else {
-              try {
-                const blob = await getMusicFile(id);
-                if (blob) {
-                  if (currentMusicBlobUrl) URL.revokeObjectURL(currentMusicBlobUrl);
-                  currentMusicBlobUrl = URL.createObjectURL(blob);
-                  currentBlobId = id;
-                  src = currentMusicBlobUrl;
-                }
-              } catch (e) { console.log('加载本地音乐文件失败', e); }
+        if (settings.musicSource === 'file' && settings.musicFileKey) {
+          try {
+            const blob = await getMusicFile(settings.musicFileKey);
+            if (blob) {
+              const newUrl = URL.createObjectURL(blob);
+              if (currentMusicBlobUrl) URL.revokeObjectURL(currentMusicBlobUrl);
+              currentMusicBlobUrl = newUrl;
+              src = newUrl;
             }
-          } else if (currentMusicBlobUrl) {
-            URL.revokeObjectURL(currentMusicBlobUrl);
-            currentMusicBlobUrl = null; currentBlobId = null;
+          } catch (e) {
+            console.log('加载本地音乐文件失败', e);
           }
         } else {
           if (currentMusicBlobUrl) {
             URL.revokeObjectURL(currentMusicBlobUrl);
-            currentMusicBlobUrl = null; currentBlobId = null;
+            currentMusicBlobUrl = null;
           }
         }
-        applyLoopMode();
         if (audio.src !== src) audio.src = src;
         audio.volume = (settings.musicVolume || 50) / 100;
       }
@@ -1928,11 +1787,19 @@
       const tabFile = document.getElementById('musicTabFile');
       const panelUrl = document.getElementById('musicPanelUrl');
       const panelFile = document.getElementById('musicPanelFile');
+      const fileInfo = document.getElementById('musicFileInfo');
+      const fileName = document.getElementById('musicFileName');
+      const fileStatus = document.getElementById('musicFileStatus');
       if (tabUrl) tabUrl.className = `flex-1 py-2 rounded-xl text-[14px] font-medium transition ${type === 'url' ? 'bg-white text-xh-primary shadow-sm' : 'text-xh-muted'}`;
       if (tabFile) tabFile.className = `flex-1 py-2 rounded-xl text-[14px] font-medium transition ${type === 'file' ? 'bg-white text-xh-primary shadow-sm' : 'text-xh-muted'}`;
       if (panelUrl) panelUrl.classList.toggle('hidden', type !== 'url');
       if (panelFile) panelFile.classList.toggle('hidden', type !== 'file');
-      renderMusicTrackList();
+      if (fileInfo && fileName && fileStatus) {
+        const hasFile = !!settings.musicFileName;
+        fileInfo.classList.toggle('hidden', !hasFile);
+        fileName.textContent = settings.musicFileName || '';
+        fileStatus.textContent = hasFile ? '已提取并保存' : '';
+      }
     }
 
     async function setMusicSourceType(type) {
@@ -1957,156 +1824,44 @@
     }
 
     async function handleMusicFileUpload(input) {
-      const files = input.files ? Array.from(input.files) : [];
-      if (!files.length) return;
+      const file = input.files && input.files[0];
+      if (!file) return;
       input.value = '';
       const hint = document.getElementById('musicFileHint');
+      const status = document.getElementById('musicFileStatus');
       if (hint) hint.textContent = '正在提取声音，请稍候...';
+      if (status) status.textContent = '提取中...';
       try {
-        let added = 0;
-        for (const file of files) {
-          const result = await processMusicFile(file);
-          const id = 'trk_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
-          await saveMusicFile(id, result.blob);
-          settings.musicLibrary = settings.musicLibrary || [];
-          settings.musicLibrary.push({ id, name: result.name });
-          added++;
-        }
+        const result = await processMusicFile(file);
+        if (settings.musicFileKey) await deleteMusicFile(settings.musicFileKey).catch(() => {});
+        const key = 'music_' + Date.now();
+        await saveMusicFile(key, result.blob);
         settings.musicSource = 'file';
+        settings.musicFileName = result.name;
+        settings.musicFileKey = key;
         LS.set('xh_settings', settings);
         renderMusicSourceUI();
-        await playMusicLibrary();
-        if (hint) hint.textContent = `已提取 ${added} 首并保存到音乐库，正在按顺序播放`;
+        await applyMusicControls();
+        if (settings.music) {
+          const audio = document.getElementById('bgAudio');
+          if (audio) audio.play().catch(() => {});
+        }
+        if (hint) hint.textContent = result.extracted ? '已提取声音并保存为背景音乐' : '已使用该文件的声音（浏览器原生播放）';
       } catch (err) {
         console.error(err);
         if (hint) hint.textContent = '提取失败：' + (err.message || '请尝试 MP3 / MP4 等常见格式');
+        if (status) status.textContent = '';
       }
     }
 
-    async function deleteTrack(id) {
-      await deleteMusicFile(id).catch(() => {});
-      settings.musicLibrary = (settings.musicLibrary || []).filter(t => t.id !== id);
-      const audio = document.getElementById('bgAudio');
-      if (currentTrackId === id) {
-        currentTrackId = null;
-        if (currentMusicBlobUrl) { URL.revokeObjectURL(currentMusicBlobUrl); currentMusicBlobUrl = null; currentBlobId = null; }
-        if (audio) audio.pause();
-        if (settings.music) {
-          settings.music = false;
-          const cb = document.getElementById('settingMusic'); if (cb) cb.checked = false;
-          updateMusicFloatPlaying(false);
-        }
-      }
+    async function clearMusicFile() {
+      if (settings.musicFileKey) await deleteMusicFile(settings.musicFileKey).catch(() => {});
+      settings.musicSource = 'url';
+      settings.musicFileName = '';
+      settings.musicFileKey = '';
       LS.set('xh_settings', settings);
       renderMusicSourceUI();
-    }
-
-    async function playTrack(id) {
-      const audio = document.getElementById('bgAudio');
-      if (!audio) return;
-      const blob = await getMusicFile(id);
-      if (!blob) { const h = document.getElementById('musicFileHint'); if (h) h.textContent = '找不到该音频，可能已被删除'; return; }
-      if (currentMusicBlobUrl) URL.revokeObjectURL(currentMusicBlobUrl);
-      currentMusicBlobUrl = URL.createObjectURL(blob);
-      currentBlobId = id;
-      applyLoopMode();
-      audio.src = currentMusicBlobUrl;
-      audio.volume = (settings.musicVolume || 50) / 100;
-      currentTrackId = id;
-      settings.musicSource = 'file';
-      settings.music = true;
-      LS.set('xh_settings', settings);
-      const cb = document.getElementById('settingMusic'); if (cb) cb.checked = true;
-      updateMusicFloatPlaying(true);
-      renderMusicSourceUI();
-      try { await audio.play(); } catch (e) { console.log('play failed', e); }
-    }
-
-    async function playMusicLibrary() {
-      const lib = settings.musicLibrary || [];
-      renderLoopModeUI();
-      if (!lib.length) { const h = document.getElementById('musicFileHint'); if (h) h.textContent = '音乐库还是空的，先上传几首吧'; return; }
-      await playTrack(lib[0].id);
-    }
-
-    function onMusicEnded() {
-      if (settings.musicSource !== 'file') return;
-      if (settings.musicLoopMode === 'one') return; // 单曲循环由 audio.loop 原生处理
-      const lib = settings.musicLibrary || [];
-      if (!lib.length) return;
-      const idx = lib.findIndex(t => t.id === currentTrackId);
-      let next = (idx < 0 ? 0 : idx + 1);
-      if (next >= lib.length) {
-        if (settings.musicLoopMode === 'list') next = 0;
-        else { stopMusicPlayback(); return; }
-      }
-      playTrack(lib[next].id);
-    }
-
-    function stopMusicPlayback() {
-      const audio = document.getElementById('bgAudio');
-      if (audio) audio.pause();
-      currentTrackId = null;
-      settings.music = false;
-      LS.set('xh_settings', settings);
-      const cb = document.getElementById('settingMusic'); if (cb) cb.checked = false;
-      updateMusicFloatPlaying(false);
-      renderMusicSourceUI();
-    }
-
-    function applyLoopMode() {
-      const a = document.getElementById('bgAudio');
-      if (!a) return;
-      if (settings.musicSource !== 'file') { a.loop = true; return; } // 默认背景音乐单曲循环
-      a.loop = (settings.musicLoopMode === 'one');
-    }
-
-    function setLoopMode(mode) {
-      settings.musicLoopMode = mode;
-      LS.set('xh_settings', settings);
-      applyLoopMode();
-      renderLoopModeUI();
-    }
-
-    function playMusicOnce() {
-      settings.musicLoopMode = 'none';
-      LS.set('xh_settings', settings);
-      renderLoopModeUI();
-      playMusicLibrary();
-    }
-
-    function renderLoopModeUI() {
-      const mode = settings.musicLoopMode || 'list';
-      document.querySelectorAll('input[name="loopMode"]').forEach(r => { r.checked = (r.value === mode); });
-    }
-
-    function updateMusicFloatPlaying(on) {
-      const btn = document.getElementById('musicFloatBtn');
-      if (!btn) return;
-      btn.classList.toggle('playing', on);
-      const onIcon = document.getElementById('musicIconOn');
-      const offIcon = document.getElementById('musicIconOff');
-      if (onIcon && offIcon) {
-        onIcon.classList.toggle('hidden', !on);
-        offIcon.classList.toggle('hidden', on);
-      }
-    }
-
-    function renderMusicTrackList() {
-      const list = document.getElementById('musicTrackList');
-      const empty = document.getElementById('musicLibraryEmpty');
-      if (!list) return;
-      const lib = settings.musicLibrary || [];
-      if (empty) empty.classList.toggle('hidden', lib.length > 0);
-      list.innerHTML = lib.map((t, i) => {
-        const active = t.id === currentTrackId;
-        return `<div class="flex items-center gap-2 bg-xh-bg rounded-2xl px-3 py-2 ${active ? 'ring-2 ring-xh-primary' : ''}">
-          <span class="text-xs text-xh-muted w-5 text-center">${i + 1}</span>
-          <button type="button" onclick="playTrack('${t.id}')" class="min-w-0 flex-1 text-left truncate text-xh-text text-[14px]">🎵 ${escapeHtml(t.name)}</button>
-          <button type="button" onclick="deleteTrack('${t.id}')" class="text-xh-muted text-lg px-1 leading-none" aria-label="删除">×</button>
-        </div>`;
-      }).join('');
-      renderLoopModeUI();
+      await applyMusicControls();
     }
 
     function setMusicVolume(val) {
@@ -2188,196 +1943,22 @@
     }
 
     function checkReminders() {
-      maybeRemindCheckin(false);
+      // placeholder for reminder scheduling
     }
 
-    function toggleCheckinTimeRow() {
-      const row = document.getElementById('remindCheckinTimeRow');
-      if (row) row.classList.toggle('hidden', !settings.remindCheckin);
-    }
-
-    function requestCheckinNotifyPermission() {
-      if (!('Notification' in window)) return;
-      if (Notification.permission === 'default') {
-        try { Notification.requestPermission().catch(() => {}); } catch (e) {}
-      }
-    }
-
-    function getPendingCheckins() {
-      const items = getCheckinItems();
-      const { all, t } = getTodayCheckinData();
-      const todayData = all[t];
-      return items.filter(it => !isCheckinDone(it, todayData[it.id]));
-    }
-
-    function maybeRemindCheckin(force) {
-      if (!settings.remindCheckin) return;
-      const pending = getPendingCheckins();
-      if (pending.length === 0) return;
-      const key = force ? 'xh_remind_checkin_time_date' : 'xh_remind_checkin_open_date';
-      const today = todayStr();
-      if (LS.get(key) === today) return;
-      LS.set(key, today);
-      showCheckinReminderBanner(pending.length);
-      sendCheckinNotification(pending.length);
-    }
-
-    function showCheckinReminderBanner(n) {
-      const b = document.getElementById('checkinReminder');
-      if (!b) return;
-      const txt = document.getElementById('checkinReminderText');
-      if (txt) txt.textContent = `今天还有 ${n} 项打卡没完成哦～`;
-      b.classList.remove('hidden');
-      clearTimeout(window.__checkinRemindTimer);
-      window.__checkinRemindTimer = setTimeout(() => b.classList.add('hidden'), 8000);
-    }
-
-    function hideCheckinReminder() {
-      const b = document.getElementById('checkinReminder');
-      if (b) b.classList.add('hidden');
-    }
-
-    function scrollToCheckin() {
-      setTimeout(() => {
-        const el = document.getElementById('checkInList');
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          el.classList.add('ring-2', 'ring-xh-primary/50');
-          setTimeout(() => el.classList.remove('ring-2', 'ring-xh-primary/50'), 1600);
-        }
-      }, 250);
-    }
-
-    function sendCheckinNotification(n) {
-      if (!('Notification' in window)) return;
-      if (Notification.permission === 'granted') {
-        try {
-          const nt = new Notification('小娜提醒你打卡 ✨', {
-            body: `今天还有 ${n} 项打卡没完成，快去完成吧～`,
-            tag: 'xh-checkin',
-            renotify: true
-          });
-          nt.onclick = () => { try { window.focus(); } catch (e) {} navTo('desktop'); scrollToCheckin(); nt.close(); };
-        } catch (e) {}
-      }
-    }
-
-    function dataURLToBlob(dataUrl) {
-      try {
-        const m = dataUrl.match(/^data:(.*?);base64,(.*)$/);
-        if (!m) return null;
-        const mime = m[1] || 'application/octet-stream';
-        const bin = atob(m[2]);
-        const arr = new Uint8Array(bin.length);
-        for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
-        return new Blob([arr], { type: mime });
-      } catch (e) { return null; }
-    }
-
-    function arrayBufferToBase64(buf) {
-      let binary = '';
-      const bytes = new Uint8Array(buf);
-      const chunk = 0x8000;
-      for (let i = 0; i < bytes.length; i += chunk) {
-        binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
-      }
-      return btoa(binary);
-    }
-
-    async function dumpStore(storeName) {
-      const db = await openMusicDB();
-      const items = await new Promise((resolve, reject) => {
-        const tx = db.transaction(storeName, 'readonly');
-        const req = tx.objectStore(storeName).openCursor();
-        const out = [];
-        req.onsuccess = (e) => {
-          const cur = e.target.result;
-          if (cur) {
-            out.push({ key: cur.key, val: cur.value });
-            cur.continue();
-          } else {
-            resolve(out);
-          }
-        };
-        req.onerror = () => reject(req.error);
-      });
-      const out = [];
-      for (const it of items) {
-        if (it.val && it.val instanceof Blob) {
-          const ab = await it.val.arrayBuffer();
-          out.push({ key: it.key, dataUrl: 'data:' + (it.val.type || 'application/octet-stream') + ';base64,' + arrayBufferToBase64(ab) });
-        } else {
-          out.push({ key: it.key });
-        }
-      }
-      return out;
-    }
-
-    async function loadStore(storeName, items) {
-      const db = await openMusicDB();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction(storeName, 'readwrite');
-        const os = tx.objectStore(storeName);
-        (items || []).forEach(it => {
-          if (it && it.key != null && it.dataUrl) {
-            const blob = dataURLToBlob(it.dataUrl);
-            if (blob) os.put(blob, it.key);
-          }
-        });
-        tx.oncomplete = () => resolve();
-        tx.onerror = () => reject(tx.error);
-      });
-    }
-
-    async function exportData() {
-      const ls = {};
+    function exportData() {
+      const data = {};
       for (let i = 0; i < localStorage.length; i++) {
         const k = localStorage.key(i);
-        if (k && k.startsWith('xh_')) ls[k] = localStorage.getItem(k);
+        if (k && k.startsWith('xh_')) data[k] = localStorage.getItem(k);
       }
-      let idb = { files: [], videos: [], covers: [] };
-      try {
-        await openMusicDB();
-        idb.files = await dumpStore(MUSIC_DB.store);
-        idb.videos = await dumpStore(MUSIC_DB.videoStore);
-        idb.covers = await dumpStore(MUSIC_DB.coverStore);
-      } catch (e) { console.log('导出 IndexedDB 失败', e); }
-      const payload = { version: 1, exportedAt: new Date().toISOString(), localStorage: ls, indexedDB: idb };
-      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
       a.download = '小娜工作台备份_' + todayStr() + '.json';
       a.click();
       URL.revokeObjectURL(url);
-    }
-
-    async function applyImportData(data) {
-      if (!data) return;
-      const ls = data.localStorage || {};
-      Object.keys(ls).forEach(k => { try { localStorage.setItem(k, ls[k]); } catch (e) {} });
-      const idb = data.indexedDB || {};
-      await openMusicDB();
-      if (idb.files) await loadStore(MUSIC_DB.store, idb.files);
-      if (idb.videos) await loadStore(MUSIC_DB.videoStore, idb.videos);
-      if (idb.covers) await loadStore(MUSIC_DB.coverStore, idb.covers);
-    }
-
-    async function importData(input) {
-      const file = input.files && input.files[0];
-      input.value = '';
-      if (!file) return;
-      if (!confirm('导入将覆盖当前所有数据（记录、视频、音乐、封面），确定继续？建议先导出一份备份。')) return;
-      try {
-        const text = await file.text();
-        const data = JSON.parse(text);
-        await applyImportData(data);
-        alert('导入成功，即将刷新页面～');
-        location.reload();
-      } catch (err) {
-        console.error(err);
-        alert('导入失败：' + (err.message || '文件格式不正确'));
-      }
     }
 
     function clearAllData() {
@@ -2416,13 +1997,6 @@
           const p = document.getElementById('checkInManage');
           if (p && p.classList.contains('hidden')) renderCheckins();
           renderTodayOverview();
-          if (settings.remindCheckin && settings.remindCheckinTime) {
-            const now = new Date();
-            const [hh, mm] = (settings.remindCheckinTime || '20:00').split(':').map(Number);
-            const cur = now.getHours() * 60 + now.getMinutes();
-            const tgt = hh * 60 + mm;
-            if (cur >= tgt) maybeRemindCheckin(true);
-          }
         }, 60000);
       }
       if (settings.defaultPage && settings.defaultPage !== 'desktop') {
@@ -2431,7 +2005,6 @@
         renderTodayOverview();
       }
       initSidebarState();
-      checkReminders();
     }
 
     // ============== 今日概况 ==============
@@ -3950,7 +3523,10 @@
         return;
       }
       el.classList.remove('hidden');
-      const coverHtml = whCoverHtml(featured, 'w-24 h-24 rounded-2xl bg-xh-bg flex-shrink-0 overflow-hidden mr-3');
+      const cover = featured.cover ? escapeHtml(featured.cover) : '';
+      const coverHtml = cover
+        ? `<div class="w-24 h-24 rounded-2xl bg-xh-bg flex-shrink-0 overflow-hidden mr-3"><img src="${cover}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<span class=\\'w-full h-full flex items-center justify-center text-2xl\\'>🧘</span>'"></div>`
+        : `<div class="w-24 h-24 rounded-2xl bg-xh-light flex items-center justify-center text-3xl flex-shrink-0 mr-3">🧘</div>`;
       el.innerHTML = `
         <div class="flex items-center justify-between mb-2">
           <span class="text-xs font-medium text-white bg-xh-primary px-2.5 py-1 rounded-full">智能推荐</span>
@@ -3968,7 +3544,6 @@
             </div>
           </div>
         </div>`;
-      hydrateCovers();
     }
 
     let whFilter = 'all';
@@ -4000,7 +3575,10 @@
         return;
       }
       listEl.innerHTML = videos.map(v => {
-        const coverHtml = whCoverHtml(v, 'w-full aspect-[4/3] rounded-t-2xl bg-xh-bg overflow-hidden relative');
+        const cover = v.cover ? escapeHtml(v.cover) : '';
+        const coverHtml = cover
+          ? `<div class="w-full aspect-[4/3] rounded-t-2xl bg-xh-bg overflow-hidden relative"><img src="${cover}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-4xl\\'>🧘</div>'"></div>`
+          : `<div class="w-full aspect-[4/3] rounded-t-2xl bg-xh-light flex items-center justify-center text-4xl relative">🧘</div>`;
         return `
         <div class="bg-white rounded-2xl shadow-card-sm overflow-hidden flex flex-col" onclick="openVideoDetail('${v.id}')">
           ${coverHtml}
@@ -4017,7 +3595,6 @@
           </div>
         </div>`;
       }).join('');
-      hydrateCovers();
     }
 
     function renderWorkplaceHealth() {
@@ -4027,133 +3604,6 @@
       renderStretchProgress();
       renderFeaturedVideo();
       filterWhVideos(whFilter);
-    }
-
-    // ---------- 工位健康：视频/封面上传与播放 ----------
-    const coverUrlCache = {};
-    let currentWhVideoKey = '';
-    let currentWhCoverKey = '';
-
-    function whCoverHtml(v, containerCls) {
-      if (v.coverFileKey) {
-        return `<div class="${containerCls}"><img data-coverkey="${escapeHtml(v.coverFileKey)}" class="w-full h-full object-cover"></div>`;
-      }
-      if (v.cover) {
-        return `<div class="${containerCls}"><img src="${escapeHtml(v.cover)}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\\'${containerCls} flex items-center justify-center text-4xl\\'>🧘</div>'"></div>`;
-      }
-      return `<div class="${containerCls} flex items-center justify-center text-4xl">🧘</div>`;
-    }
-
-    async function hydrateCovers() {
-      const imgs = document.querySelectorAll('img[data-coverkey]');
-      for (const img of imgs) {
-        const key = img.dataset.coverkey;
-        if (!key || img.getAttribute('src')) continue;
-        if (coverUrlCache[key]) { img.src = coverUrlCache[key]; continue; }
-        try {
-          const blob = await getCoverImage(key);
-          if (blob) {
-            const url = URL.createObjectURL(blob);
-            coverUrlCache[key] = url;
-            img.src = url;
-          }
-        } catch (e) { /* 保留占位 */ }
-      }
-    }
-
-    function isDirectVideoUrl(url) {
-      if (!url) return false;
-      return /\.(mp4|webm|ogg|mov|m4v|m3u8)(\?|#|$)/i.test(url) || /^https?:\/\/[^ ]+\.(mp4|webm|ogg|mov|m4v)/i.test(url);
-    }
-
-    function whVideoActionHtml(v) {
-      const canInline = !!v.videoFileKey || isDirectVideoUrl(v.url);
-      const linkBtn = (v.url && !isDirectVideoUrl(v.url))
-        ? `<a href="${escapeHtml(v.url)}" target="_blank" class="block w-full py-3 rounded-2xl bg-xh-bg text-xh-primary text-center text-sm font-medium active:scale-95 transition">🔗 打开视频链接</a>`
-        : '';
-      const playBtn = canInline
-        ? `<button onclick="playWorkplaceVideo('${v.id}')" class="block w-full py-3 rounded-2xl bg-xh-primary text-white text-center text-sm font-medium shadow-btn active:scale-95 transition">▶ 观看视频</button>`
-        : '';
-      return playBtn + linkBtn;
-    }
-
-    async function playWorkplaceVideo(id) {
-      const videos = LS.get('xh_videos', []);
-      const v = videos.find(x => x.id === id);
-      if (!v) return;
-      if (v.videoFileKey) {
-        try {
-          const blob = await getRecipeVideo(v.videoFileKey);
-          if (blob) { openVideoPlayer(URL.createObjectURL(blob), v.name, true); return; }
-        } catch (e) { console.error('读取本地视频失败', e); }
-      }
-      if (v.url) {
-        if (isDirectVideoUrl(v.url)) {
-          openVideoPlayer(v.url, v.name, false);
-        } else {
-          window.open(v.url, '_blank');
-          alert('该链接不支持应用内直接播放，已为你打开原网页');
-        }
-      }
-    }
-
-    function uploadWhVideo(input) {
-      const file = input.files && input.files[0];
-      if (!file) return;
-      input.value = '';
-      if (file.size > 200 * 1024 * 1024) { alert('视频文件过大，建议小于 200MB'); return; }
-      const key = 'whv_' + Date.now();
-      saveRecipeVideo(key, file).then(() => {
-        currentWhVideoKey = key;
-        document.getElementById('whVideoFileName').textContent = file.name;
-        document.getElementById('whVideoFilePreview').classList.remove('hidden');
-        document.getElementById('whVideoUrl').value = '';
-      }).catch(err => {
-        console.error('视频保存失败', err);
-        alert('视频保存失败，可能是文件过大或浏览器不支持本地存储');
-      });
-    }
-
-    function clearWhVideo() {
-      const key = currentWhVideoKey;
-      currentWhVideoKey = '';
-      document.getElementById('whVideoFilePreview').classList.add('hidden');
-      document.getElementById('whVideoFileName').textContent = '';
-      if (key) deleteRecipeVideo(key).catch(() => {});
-    }
-
-    function uploadWhCover(input) {
-      const file = input.files && input.files[0];
-      if (!file) return;
-      input.value = '';
-      const key = 'whc_' + Date.now();
-      saveCoverImage(key, file).then(() => {
-        currentWhCoverKey = key;
-        document.getElementById('whVideoCoverImg').src = URL.createObjectURL(file);
-        document.getElementById('whVideoCoverPreview').classList.remove('hidden');
-        document.getElementById('whVideoCover').value = '';
-      }).catch(err => {
-        console.error('封面保存失败', err);
-        alert('封面保存失败，请重试');
-      });
-    }
-
-    function clearWhCover() {
-      const key = currentWhCoverKey;
-      currentWhCoverKey = '';
-      document.getElementById('whVideoCoverPreview').classList.add('hidden');
-      if (key) deleteCoverImage(key).catch(() => {});
-    }
-
-    function resetAddVideoForm() {
-      document.getElementById('whVideoName').value = '';
-      document.getElementById('whVideoUrl').value = '';
-      document.getElementById('whVideoCover').value = '';
-      document.getElementById('whVideoDuration').value = '';
-      currentWhVideoKey = '';
-      currentWhCoverKey = '';
-      document.getElementById('whVideoFilePreview').classList.add('hidden');
-      document.getElementById('whVideoCoverPreview').classList.add('hidden');
     }
 
     function openAddVideoModal() {
@@ -4171,18 +3621,16 @@
       const cover = document.getElementById('whVideoCover').value.trim();
       const duration = parseInt(document.getElementById('whVideoDuration').value) || 0;
       const category = document.getElementById('whVideoCategory').value;
-      if (!name) { alert('请填写视频名称'); return; }
-      if (!url && !currentWhVideoKey) { alert('请填写视频链接，或上传本地视频'); return; }
+      if (!name) return;
       const videos = LS.get('xh_videos', []);
       videos.unshift({
-        id: uid(), name, url,
-        videoFileKey: currentWhVideoKey,
-        cover: cover,
-        coverFileKey: currentWhCoverKey,
-        duration, category, source: '自定义', reason: '', fav: false, createdAt: Date.now()
+        id: uid(), name, url, cover, duration, category, source: '自定义', reason: '', fav: false, createdAt: Date.now()
       });
       LS.set('xh_videos', videos);
-      resetAddVideoForm();
+      document.getElementById('whVideoName').value = '';
+      document.getElementById('whVideoUrl').value = '';
+      document.getElementById('whVideoCover').value = '';
+      document.getElementById('whVideoDuration').value = '';
       closeAddVideoModal();
       renderWorkplaceHealth();
     }
@@ -4190,12 +3638,7 @@
     function deleteWorkplaceVideo(id) {
       if (!confirm('确定删除这个跟练视频？')) return;
       let videos = LS.get('xh_videos', []);
-      const v = videos.find(x => x.id === id);
-      if (v) {
-        if (v.videoFileKey) deleteRecipeVideo(v.videoFileKey).catch(() => {});
-        if (v.coverFileKey) deleteCoverImage(v.coverFileKey).catch(() => {});
-      }
-      videos = videos.filter(x => x.id !== id);
+      videos = videos.filter(v => v.id !== id);
       LS.set('xh_videos', videos);
       renderWorkplaceHealth();
       closeVideoDetail();
@@ -4225,7 +3668,10 @@
       const content = document.getElementById('videoDetailContent');
       if (!modal || !content) return;
       content.dataset.vid = id;
-      const coverHtml = whCoverHtml(v, 'w-full aspect-video rounded-2xl bg-xh-bg overflow-hidden');
+      const cover = v.cover ? escapeHtml(v.cover) : '';
+      const coverHtml = cover
+        ? `<div class="w-full aspect-video rounded-2xl bg-xh-bg overflow-hidden"><img src="${cover}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-5xl\\'>🧘</div>'"></div>`
+        : `<div class="w-full aspect-video rounded-2xl bg-xh-light flex items-center justify-center text-5xl">🧘</div>`;
       content.innerHTML = `
         ${coverHtml}
         <div>
@@ -4242,7 +3688,7 @@
           </button>
           <button onclick="deleteWorkplaceVideo('${v.id}')" class="text-xs text-xh-muted px-3 py-2">删除</button>
         </div>
-        ${whVideoActionHtml(v)}
+        ${v.url ? `<a href="${escapeHtml(v.url)}" target="_blank" class="block w-full py-3 rounded-2xl bg-xh-bg text-xh-primary text-center text-sm font-medium active:scale-95 transition">🔗 打开视频链接</a>` : ''}
         <div id="whTimerBox" class="bg-xh-primary rounded-3xl p-4 text-white shadow-btn">
           <div class="flex items-center justify-between mb-3">
             <span class="text-sm font-medium">跟练计时</span>
@@ -4256,7 +3702,6 @@
           </button>
         </div>`;
       modal.classList.remove('hidden');
-      hydrateCovers();
       whTimerSec = 0;
       whCurrentVideoId = null;
       if (whTimer) { clearInterval(whTimer); whTimer = null; }
@@ -4712,8 +4157,6 @@
     // ============== 初始化 ==============
     window.onload = () => {
       openMusicDB().catch(() => {});
-      const _bgAudio = document.getElementById('bgAudio');
-      if (_bgAudio) _bgAudio.addEventListener('ended', onMusicEnded);
       loadSettings();
       setWelcomeDate();
       initTodoInputs();
